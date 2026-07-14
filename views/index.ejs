@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MKFlix</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header>
+
+<h1>🎬 <span>MK</span>Flix</h1>
+
+<p class="subtitle">
+Discover • Watch • Stream
+</p>
+
+<p class="description">
+Search millions of movies, TV shows and actors.
+</p>
+
+</header>
+<main>
+
+<form action="/search" method="GET">
+
+<input
+type="text"
+name="movie"
+placeholder="Search a movie..."
+required
+>
+
+<button id="searchBtn">
+
+    Search
+    
+    </button>
+    <div id="loading">
+
+        Searching...
+        
+        </div>
+</form>
+<br>
+<h2>🔥 Trending Today</h2>
+
+<div class="movies-container">
+
+<% trendingMovies.forEach(movie => { %>
+
+<div class="movie-card">
+
+    <img
+    src="<%= IMAGE_BASE_URL %><%= movie.poster_path %>"
+    alt="<%= movie.title %>">
+
+    <h3><%= movie.title %></h3>
+
+    <p>⭐ <%= movie.vote_average.toFixed(1) %></p>
+
+    <a href="/movie/<%= movie.id %>">
+        Explore
+    </a>
+
+</div>
+
+<% }) %>
+
+</div>
+
+</main>
+
+<footer>
+
+Made with ❤️ by Milan
+
+</footer>
+<script>
+
+    document.querySelector("form")
+    .addEventListener("submit",()=>{
+    
+    document.getElementById("loading")
+    .style.display="block";
+    
+    });
+    
+    </script>
+</body>
+
+</html>

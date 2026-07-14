@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title><%= movie.title %></title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+
+</head>
+
+<body>
+    <button class="back-btn" onclick="history.back()">
+        ← Back to Results
+    </button>
+<div class="details-container">
+
+    <div class="poster">
+
+        <img
+        src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+        alt="<%= movie.title %>">
+
+    </div>
+      
+    <div class="info">
+
+        <h1><%= movie.title %></h1>
+
+        <p>⭐ <%= movie.vote_average %></p>
+
+        <p>📅 <%= movie.release_date %></p>
+
+        <p>⏱ <%= movie.runtime %> min</p>
+
+        <h3>Overview</h3>
+
+        <p><%= movie.overview %></p>
+        <br>
+        <h2>🎥 Watch the Official Trailer</h2>
+
+        <% if(trailer){ %>
+        
+        <div class="trailer">
+        
+            <iframe
+                src="https://www.youtube.com/embed/<%= trailer.key %>"
+                title="Official Trailer"
+                allowfullscreen>
+            </iframe>
+        
+        </div>
+        
+        <% } else { %>
+        
+        <p>No trailer available.</p>
+        
+        <% } %>
+        <br>
+        <h2>Photos</h2>
+        <div class="gallery">
+
+            <% images.forEach(image => { %>
+            
+                <img
+                    src="<%= IMAGE_BASE_URL %><%= image.file_path %>"
+                    alt="<%= movie.title %>">
+            
+            <% }) %>
+            
+            </div>
+            <br>
+            <h2>Cast</h2>
+            <div class="cast-container">
+            
+            <% cast.forEach((actor,index)=>{ %>
+            
+            <div
+            class="cast-card <%= index>=12 ? 'hidden-cast' : '' %>">
+            
+                <% if(actor.profile_path){ %>
+            
+                <img
+                src="<%= IMAGE_BASE_URL %><%= actor.profile_path %>"
+                alt="<%= actor.name %>">
+            
+                <% } %>
+            
+                <h3>
+                    <a href="/person/<%= actor.id %>">
+                        <%= actor.name %>
+                    </a>
+                </h3>
+            
+            
+                <p><%= actor.character %></p>
+            
+            </div>
+            
+            <% }) %>
+            
+            </div>
+            
+    </div>
+    
+</div>
+<h2>🎬 Similar Movies</h2>
+
+<div class="movies-container">
+
+<% similarMovies.forEach(movie => { %>
+
+<div class="movie-card">
+
+    <img
+        src="<%= IMAGE_BASE_URL %><%= movie.poster_path %>"
+        alt="<%= movie.title %>">
+
+    <h3><%= movie.title %></h3>
+
+    <p>⭐ <%= movie.vote_average.toFixed(1) %></p>
+
+    <a href="/movie/<%= movie.id %>">
+        View Details
+    </a>
+
+</div>
+
+<% }) %>
+
+</div>
+<script>
+    
+    const button =
+    document.getElementById("showMoreBtn");
+    
+    button.addEventListener("click",()=>{
+    
+        const hidden =
+        document.querySelectorAll(".hidden-cast");
+    
+        for(
+            let i=0;
+            i<12 && i<hidden.length;
+            i++
+        ){
+    
+            hidden[i].classList.remove("hidden-cast");
+    
+        }
+    
+        if(
+            document.querySelectorAll(".hidden-cast").length===0
+        ){
+    
+            button.style.display="none";
+    
+        }
+    
+    });
+    
+    </script>
+    <div id="lightbox" class="lightbox">
+
+        <img id="lightboxImage">
+    
+    </div>
+    <script>
+
+        const lightbox = document.getElementById("lightbox");
+        
+        const lightboxImage = document.getElementById("lightboxImage");
+        
+        document
+        .querySelectorAll(".gallery img, .poster img, .cast-card img")
+        .forEach(image => {
+        
+            image.addEventListener("click", () => {
+        
+                lightboxImage.src = image.src;
+        
+                lightbox.classList.add("active");
+        
+            });
+        
+        });
+        
+        lightbox.addEventListener("click", () => {
+        
+            lightbox.classList.remove("active");
+        
+        });
+        
+        </script>
+    
+</body>
+
+</html>

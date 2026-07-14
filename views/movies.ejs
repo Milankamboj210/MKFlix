@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <a href="/" class="back-btn">
+        ← Search Another Movie
+    </a>
+    <h1>Results for "<%= searchQuery %>"</h1>
+<div class="movies-container">
+
+<% movies.forEach(movie => { %>
+
+    <div class="movie-card">
+
+        <h2><%= movie.title %></h2>
+
+        <p>⭐ <%= movie.vote_average %></p>
+
+        <p>📅 <%= movie.release_date %></p>
+        <% if(movie.poster_path){ %>
+
+            <img
+                src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+                alt="<%= movie.title %>"
+            >
+            
+            <% } else { %>
+            
+            <div class="no-poster">
+                No Poster Available
+            </div>
+            
+            <% } %>
+        <a href="/movie/<%= movie.id %>">
+            View Details
+        </a>
+
+    </div>
+
+<% }) %></div>
+</body>    
+</html>

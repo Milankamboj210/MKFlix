@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title><%= person.name %></title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+
+</head>
+
+<body>
+
+<button class="back-btn" onclick="history.back()">
+    ← Back
+</button>
+
+<div class="details-container">
+
+    <div class="poster">
+
+        <% if(person.profile_path){ %>
+
+        <img
+        src="<%= IMAGE_BASE_URL %><%= person.profile_path %>"
+        alt="<%= person.name %>">
+
+        <% } %>
+
+    </div>
+
+    <div class="info">
+
+        <h1><%= person.name %></h1>
+
+        <p><strong>Birthday:</strong>
+        <%= person.birthday || "Unknown" %></p>
+
+        <p><strong>Place of Birth:</strong>
+        <%= person.place_of_birth || "Unknown" %></p>
+
+        <p><strong>Popularity:</strong>
+            <%= person.popularity.toFixed(1) %></p>
+
+            <h2>Biography</h2>
+
+            <p class="biography">
+                <%= person.biography || "Biography unavailable." %>
+            </p>
+        <h2>🎬 Known For</h2>
+
+<div class="movies-container">
+
+<% movies.forEach(movie => { %>
+
+<div class="movie-card">
+
+<img
+src="<%= IMAGE_BASE_URL %><%= movie.poster_path %>"
+alt="<%= movie.title %>">
+
+<h3>
+    <a href="/movie/<%= movie.id %>">
+        <%= movie.title %>
+    </a>
+</h3>
+<p>⭐ <%= movie.vote_average %></p>
+
+<a href="/movie/<%= movie.id %>">
+
+View Movie
+
+</a>
+
+</div>
+
+<% }) %>
+
+</div>
+
+        </div>
+
+</div>
+<div id="lightbox" class="lightbox">
+    <img id="lightboxImage">
+</div>
+<script>
+
+const lightbox=document.getElementById("lightbox");
+const lightboxImage=document.getElementById("lightboxImage");
+
+document.querySelectorAll(".poster img,.movie-card img")
+.forEach(img=>{
+
+    img.addEventListener("click",()=>{
+
+        lightboxImage.src=img.src;
+
+        lightbox.classList.add("active");
+
+    });
+
+});
+
+lightbox.addEventListener("click",()=>{
+
+    lightbox.classList.remove("active");
+
+});
+
+</script>
+</body>
